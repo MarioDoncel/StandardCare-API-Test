@@ -52,5 +52,24 @@ usersRouter.get(
     return undefined;
   }
 );
+usersRouter.patch(
+  '/:userId',
+  async (req: Request, res: Response, next: NextFunction) => {
+    const { userId } = req.params;
+    const updateFields = req.body;
+
+    try {
+      const updatedUser = await UserModel.findOneAndUpdate(
+        { _id: userId },
+        updateFields
+      );
+
+      res.status(200).json(updatedUser);
+    } catch (error) {
+      next(error);
+    }
+    return undefined;
+  }
+);
 
 export default usersRouter;
