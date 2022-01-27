@@ -1,11 +1,7 @@
 import express, { Request, Response, NextFunction } from 'express';
 
 import { CensusModel } from '../Database/model/Census';
-import { UserModel } from '../Database/model/User';
-import AppError from '../errors/AppError';
 import { ICensus } from '../interfaces/Census';
-import { IUser } from '../interfaces/User';
-import { IVendor } from '../interfaces/Vendor';
 
 const censusRouter = express.Router();
 

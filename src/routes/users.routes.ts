@@ -33,10 +33,18 @@ usersRouter.post(
 
 usersRouter.get(
   '/',
-  async (req: Request, res: Response, next: NextFunction) => {
-    const users = await UserModel.find();
-
-    res.status(200).json(users);
+  async (
+    req: Request,
+    res: Response,
+    next: NextFunction
+  ): Promise<Response | undefined> => {
+    try {
+      const users = await UserModel.find();
+      return res.status(200).json(users);
+    } catch (error) {
+      next(error);
+    }
+    return undefined;
   }
 );
 usersRouter.get(
@@ -56,12 +64,12 @@ usersRouter.patch(
   '/:userId',
   async (req: Request, res: Response, next: NextFunction) => {
     const { userId } = req.params;
-    const updateFields = req.body;
+    const updateFields: Partial<IUser> = req.body;
 
     try {
-      const updatedUser = await UserModel.findOneAndUpdate(
+      const updatedUser: IUser | null = await UserModel.findOneAndUpdate(
         { _id: userId },
-        updateFields
+        { ...updateFields, emailVerified: false }
       );
 
       res.status(200).json(updatedUser);
