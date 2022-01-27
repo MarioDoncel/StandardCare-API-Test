@@ -1,13 +1,18 @@
-import { Request, Response, NextFunction } from 'express'
-import AppError from '../errors/AppError'
+import { Request, Response, NextFunction } from 'express';
 
-function errorHandler(err: Error, request: Request, response: Response, next: NextFunction) {
+import AppError from '../errors/AppError';
 
+function errorHandler(
+  err: Error,
+  request: Request,
+  response: Response,
+  next: NextFunction
+) {
   if (err instanceof AppError) {
     return response.status(err.statusCode).json({
       status: 'error',
       message: err.message,
-      data: err?.data
+      data: err?.data,
     });
   }
 
@@ -15,9 +20,8 @@ function errorHandler(err: Error, request: Request, response: Response, next: Ne
 
   return response.status(500).json({
     status: 'error',
-    message: 'Internal server error'
+    message: 'Internal server error',
   });
-
 }
 
 export { errorHandler };
