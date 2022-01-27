@@ -7,6 +7,8 @@ engagementRouter.get('/', (req: Request, res: Response, next: NextFunction) => {
 });
 
 engagementRouter.put('/', (req: Request, res: Response, next: NextFunction) => {
+  const engagement: number = req.body;
+
   res.send('Express + Typescript Server');
 });
 
