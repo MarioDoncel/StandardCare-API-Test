@@ -39,5 +39,18 @@ usersRouter.get(
     res.status(200).json(users);
   }
 );
+usersRouter.get(
+  '/:userId',
+  async (req: Request, res: Response, next: NextFunction) => {
+    const { userId } = req.params;
+    try {
+      const user = await UserModel.findById(userId);
+      res.status(200).json(user);
+    } catch (error) {
+      next(error);
+    }
+    return undefined;
+  }
+);
 
 export default usersRouter;
