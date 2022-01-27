@@ -1,15 +1,55 @@
 import express, { Request, Response, NextFunction } from 'express';
 
+import { MetricsModel } from '../../Database/model/Metrics';
+import { IMetrics } from '../../interfaces/Metrics';
+
 const engagementRouter = express.Router();
 
-engagementRouter.get('/', (req: Request, res: Response, next: NextFunction) => {
-  res.send('Hello Server Is Running');
-});
+engagementRouter.get(
+  '/',
+  async (
+    req: Request,
+    res: Response,
+    next: NextFunction
+  ): Promise<IMetrics | undefined> => {
+    const { vendorName } = res.locals; // I assume the vendor name comes from an authentication middleware.
+    try {
+      const metrics = await MetricsModel.findOne({ vendorName });
+      res.status(200).json(metrics);
+    } catch (error) {
+      next(error);
+    }
 
-engagementRouter.put('/', (req: Request, res: Response, next: NextFunction) => {
-  const engagement: number = req.body;
+    return undefined;
+  }
+);
 
-  res.send('Express + Typescript Server');
-});
+engagementRouter.put(
+  '/',
+  async (
+    req: Request,
+    res: Response,
+    next: NextFunction
+  ): Promise<IMetrics | undefined> => {
+    const engagement: number = req.body;
+    const { vendorName } = res.locals; // I assume the vendor name comes from an authentication middleware.
+
+    try {
+      const updatedMetrics = await MetricsModel.findOneAndUpdate(
+        { vendorName },
+        { engagement, updateDate: Date.now() },
+        {
+          new: true,
+          upsert: true,
+        }
+      );
+
+      res.status(200).json(updatedMetrics);
+    } catch (error) {
+      next(error);
+    }
+    return undefined;
+  }
+);
 
 export default engagementRouter;

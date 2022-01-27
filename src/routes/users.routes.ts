@@ -47,6 +47,7 @@ usersRouter.get(
     return undefined;
   }
 );
+
 usersRouter.get(
   '/:userId',
   async (req: Request, res: Response, next: NextFunction) => {
@@ -66,10 +67,12 @@ usersRouter.patch(
     const { userId } = req.params;
     const updateFields: Partial<IUser> = req.body;
 
+    const { email } = updateFields;
+
     try {
       const updatedUser: IUser | null = await UserModel.findOneAndUpdate(
         { _id: userId },
-        { ...updateFields, emailVerified: false }
+        { ...updateFields, emailVerified: !email } // if email is an update field, then = false
       );
 
       res.status(200).json(updatedUser);
