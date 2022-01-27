@@ -1,5 +1,5 @@
 export interface IVendor {
-  id?: number;
+  _id?: string;
   name: string;
   averageEngagement: number;
 }

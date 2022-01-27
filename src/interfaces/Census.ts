@@ -1,5 +1,6 @@
 export interface ICensus {
-  id?: string;
+  _id?: string;
   name: string;
   dateOfBirth: Date;
+  clientName: string;
 }

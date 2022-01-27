@@ -1,10 +1,12 @@
-import mongoose from 'mongoose';
+import mongoose, { Connection } from 'mongoose';
+import autoIncrement from 'mongoose-auto-increment';
 
 import environmentVariables from '../config/environment';
 
 const MongoConnection = async () => {
   try {
     await mongoose.connect(environmentVariables.MONGO_CONNECTION);
+
     console.log('💾:Database Connected');
   } catch (error) {
     console.log(environmentVariables.MONGO_CONNECTION);
@@ -12,5 +14,7 @@ const MongoConnection = async () => {
     process.exit();
   }
 };
+
+autoIncrement.initialize(mongoose.connection);
 
 export default MongoConnection;

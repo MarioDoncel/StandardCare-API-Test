@@ -1,13 +1,15 @@
 import express, { Request, Response, NextFunction } from 'express';
 
-import engagementRouter from './engagement.routes';
+import metricsRoutes from './metrics.routes';
+import usersRoutes from './users.routes';
 
 const routes = express.Router();
 
 routes.get('/', (req: Request, res: Response, next: NextFunction) => {
-  res.send('Express + Typescript Server');
+  res.send('Hello Ryan, server is running! ');
 });
 
-routes.use('/engagement', engagementRouter);
+routes.use('/metrics', metricsRoutes);
+routes.use('/users', usersRoutes);
 
 export default routes;
