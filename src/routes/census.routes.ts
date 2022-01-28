@@ -1,29 +1,12 @@
-import express, { Request, Response, NextFunction } from 'express';
+import express from 'express';
 
-import { CensusModel } from '../Database/model/Census';
+import { getCensusByClientController } from '../useCases/census/controllers/getCensusByClient.controller';
 import { receiveCensusController } from '../useCases/census/controllers/receiveCensus.controller';
 
 const censusRouter = express.Router();
 
 censusRouter.post('/', receiveCensusController);
 
-censusRouter.get(
-  '/:clientName',
-  async (
-    req: Request,
-    res: Response,
-    next: NextFunction
-  ): Promise<Response | undefined> => {
-    const { clientName } = req.params;
-    try {
-      const census = await CensusModel.find({ clientName });
-
-      return res.status(200).json(census);
-    } catch (error) {
-      next(error);
-    }
-    return undefined;
-  }
-);
+censusRouter.get('/:clientName', getCensusByClientController);
 
 export default censusRouter;

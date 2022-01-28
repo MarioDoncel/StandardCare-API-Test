@@ -2,27 +2,11 @@ import express, { Request, Response, NextFunction } from 'express';
 
 import { MetricsModel } from '../../Database/model/Metrics';
 import { IMetrics } from '../../interfaces/Metrics';
+import { getEngagementController } from '../../useCases/metrics/controllers/getEngagement.controller';
 
 const engagementRouter = express.Router();
 
-engagementRouter.get(
-  '/',
-  async (
-    req: Request,
-    res: Response,
-    next: NextFunction
-  ): Promise<IMetrics | undefined> => {
-    const { vendorName } = res.locals; // I assume the vendor name comes from an authentication middleware.
-    try {
-      const metrics = await MetricsModel.findOne({ vendorName });
-      res.status(200).json(metrics);
-    } catch (error) {
-      next(error);
-    }
-
-    return undefined;
-  }
-);
+engagementRouter.get('/', getEngagementController);
 
 engagementRouter.put(
   '/',
