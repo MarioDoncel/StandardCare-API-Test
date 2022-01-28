@@ -12,6 +12,7 @@ const schema = new mongoose.Schema<IVendor>(
       minlength: 3,
     },
     engagement: { type: String, required: true },
+    password: { type: String, required: true },
   },
   {
     timestamps: true,
