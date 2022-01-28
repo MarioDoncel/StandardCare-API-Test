@@ -4,7 +4,13 @@ import { IVendor } from '../../interfaces/Vendor';
 
 const schema = new mongoose.Schema<IVendor>(
   {
-    name: { type: String, required: true, unique: true },
+    name: {
+      type: String,
+      required: true,
+      unique: true,
+      trim: true,
+      minlength: 3,
+    },
     engagement: { type: String, required: true },
   },
   {

@@ -1,17 +1,16 @@
 import { NextFunction, Response, Request } from 'express';
 
-import DatabaseError from '../../../errors/DatabaseError';
-import { IMetrics } from '../../../interfaces/Metrics';
-import { getMetricsService } from '../services/getMetrics.service';
+import { IVendor } from '../../../interfaces/Vendor';
+import { getVendorByNameService } from '../services/getVendorByName.service';
 
-export const getEngagementController = async (
+export const getVendorEngagementController = async (
   req: Request,
   res: Response,
   next: NextFunction
-): Promise<IMetrics | undefined> => {
+): Promise<Response | undefined> => {
   const { vendorName } = res.locals; // I assume the vendor name comes from an authentication middleware, because in the documentation is described as get YOUR current metrics.
   try {
-    const metrics: IMetrics = await getMetricsService(vendorName);
+    const metrics: IVendor = await getVendorByNameService(vendorName);
     const { engagement } = metrics;
 
     res.status(200).json(engagement);
