@@ -5,11 +5,12 @@ import ForbiddenError from '../errors/ForbiddenError';
 
 const { secret, expiresIn } = tokensConfig.jwt;
 
-export const createJWT = (id: string) => {
+export const createJWT = (id: string): string => {
   const accessToken = sign({}, secret, {
     subject: id,
     expiresIn,
   });
+  return accessToken;
 };
 
 export const validateJWT = (jwt: string): string => {

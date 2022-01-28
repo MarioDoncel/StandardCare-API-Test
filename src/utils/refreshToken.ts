@@ -9,16 +9,16 @@ import { IRefreshToken } from '../interfaces/RefreshToken';
 const { REFRESH_TOKEN_SECRET, BCRYPT_SALT_ROUNDS } = environmentVariables;
 const encryptedSecret = bcrypt.hash(REFRESH_TOKEN_SECRET, BCRYPT_SALT_ROUNDS);
 
-const createRefreshToken = async (accessId: string) => {
+export const createRefreshToken = async (id: string) => {
   const refreshToken: IRefreshToken = await RefreshTokenModel.create({
-    accessId,
+    accessId: id,
     expiresIn: tokensConfig.refreshToken.expiresIn,
     secret: encryptedSecret,
   });
   return refreshToken;
 };
 
-const validateRefreshToken = async (
+export const validateRefreshToken = async (
   accessId: string,
   refreshToken: IRefreshToken
 ): Promise<boolean> => {

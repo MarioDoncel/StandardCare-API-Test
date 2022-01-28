@@ -1,33 +1,18 @@
 import { NextFunction, Response, Request } from 'express';
 
-import { VendorModel } from '../../../Database/model/Vendors';
-import AppError from '../../../errors/AppError';
-import DatabaseError from '../../../errors/DatabaseError';
-import { IVendor } from '../../../interfaces/Vendor';
+import { createJWT } from '../../../utils/jwt';
+import { createRefreshToken } from '../../../utils/refreshToken';
 
 export const logInVendorControlller = async (
   req: Request,
   res: Response,
   next: NextFunction
-): Promise<Response | undefined> => {
-  try {
-    const authHeader = req.headers.authorization;
-    if (!authHeader || !authHeader.includes('Basic'))
-      throw new AppError('Missing authorization header');
+): Promise<Response> => {
+  const { _id }: { _id: string } = res.locals.vendor;
+  const accessToken = createJWT(_id);
+  const refreshToken = createRefreshToken(_id);
+  localStorage.setItem('AccessToken', accessToken);
+  localStorage.setItem('RefreshToken', JSON.stringify(refreshToken));
 
-    const [, base64Data] = authHeader.split(' ');
-    const credentials = Buffer.from(base64Data, 'base64').toString('utf-8');
-    const [name, password] = credentials.split(':');
-    // encrypt password
-    const vendor: IVendor | null = await VendorModel.findOne({
-      name,
-      password,
-    });
-    if (!vendor) throw new DatabaseError('Invalid authentication credentials');
-
-    res.status(200).json('Success');
-  } catch (error) {
-    next(error);
-  }
-  return undefined;
+  return res.status(200).json('Success');
 };
