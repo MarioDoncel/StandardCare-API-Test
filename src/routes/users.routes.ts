@@ -1,35 +1,12 @@
 import express, { Request, Response, NextFunction } from 'express';
 
 import { UserModel } from '../Database/model/User';
-import AppError from '../errors/AppError';
 import { IUser } from '../interfaces/User';
+import { createUserController } from '../useCases/users/controllers/createUser.controller';
 
 const usersRouter = express.Router();
 
-usersRouter.post(
-  '/',
-  async (
-    req: Request,
-    res: Response,
-    next: NextFunction
-  ): Promise<Response | undefined> => {
-    const { firstName, lastName, email, dateOfBirth }: IUser = req.body;
-    try {
-      const user = await UserModel.create({
-        firstName,
-        lastName,
-        email,
-        dateOfBirth,
-      });
-      console.log(user);
-
-      return res.status(201).send(user);
-    } catch (error) {
-      next(error);
-      return undefined;
-    }
-  }
-);
+usersRouter.post('/', createUserController);
 
 usersRouter.get(
   '/',
