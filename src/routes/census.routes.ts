@@ -1,36 +1,11 @@
 import express, { Request, Response, NextFunction } from 'express';
 
 import { CensusModel } from '../Database/model/Census';
-import { ICensus } from '../interfaces/Census';
+import { receiveCensusController } from '../useCases/census/controllers/receiveCensus.controller';
 
 const censusRouter = express.Router();
 
-censusRouter.post(
-  '/',
-  async (
-    req: Request,
-    res: Response,
-    next: NextFunction
-  ): Promise<Response | undefined> => {
-    // i didn't understand if the census users comes from a client or from a vendor.
-    const clientCensus: ICensus[] = req.body;
-
-    try {
-      clientCensus.forEach(async (user) => {
-        await CensusModel.create({
-          name: user.name,
-          dateOfBirth: user.dateOfBirth,
-          clientName: user.clientName,
-        });
-      });
-
-      return res.status(201).send('Success');
-    } catch (error) {
-      next(error);
-      return undefined;
-    }
-  }
-);
+censusRouter.post('/', receiveCensusController);
 
 censusRouter.get(
   '/:clientName',
@@ -41,7 +16,7 @@ censusRouter.get(
   ): Promise<Response | undefined> => {
     const { clientName } = req.params;
     try {
-      const census = await CensusModel.find({ vendor: clientName });
+      const census = await CensusModel.find({ clientName });
 
       return res.status(200).json(census);
     } catch (error) {

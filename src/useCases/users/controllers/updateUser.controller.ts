@@ -3,7 +3,7 @@ import { NextFunction, Request, Response } from 'express';
 import { IUser } from '../../../interfaces/User';
 import { updateUserService } from '../services/updateUser.service';
 
-export const UpdateUserController = async (
+export const updateUserController = async (
   req: Request,
   res: Response,
   next: NextFunction
