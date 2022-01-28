@@ -1,4 +1,4 @@
-import mongoose, { Connection } from 'mongoose';
+import mongoose from 'mongoose';
 import autoIncrement from 'mongoose-auto-increment';
 
 import environmentVariables from '../config/environment';
