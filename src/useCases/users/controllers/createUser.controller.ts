@@ -1,7 +1,7 @@
 import { NextFunction, Request, Response } from 'express';
 
-import { UserModel } from '../../../Database/model/User';
 import { IUser } from '../../../interfaces/User';
+import { createUserService } from '../services/createUser.service';
 
 export const createUserController = async (
   req: Request,
@@ -9,8 +9,9 @@ export const createUserController = async (
   next: NextFunction
 ): Promise<Response | undefined> => {
   const { firstName, lastName, email, dateOfBirth }: IUser = req.body;
+
   try {
-    const user = await UserModel.create({
+    const user: IUser = await createUserService({
       firstName,
       lastName,
       email,

@@ -1,14 +1,13 @@
-import { nextTick } from 'process';
-
 import { UserModel } from '../../../Database/model/User';
-import { IUserDto } from './IUser.dto';
+import { IUser } from '../../../interfaces/User';
+import { ICreateUserDto } from '../dtos/CreateUser.dto';
 
 export const createUserService = async ({
   firstName,
   lastName,
   email,
   dateOfBirth,
-}: IUserDto) => {
+}: ICreateUserDto): Promise<IUser> => {
   const user = await UserModel.create({
     firstName,
     lastName,
