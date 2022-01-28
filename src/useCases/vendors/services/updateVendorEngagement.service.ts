@@ -12,5 +12,6 @@ export const updateVendorEngagementService = async (
       new: true,
     }
   );
+  if (updatedVendor) delete updatedVendor.password;
   return updatedVendor;
 };

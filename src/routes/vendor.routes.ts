@@ -1,10 +1,12 @@
 import express from 'express';
 
 import { getVendorEngagementController } from '../useCases/vendors/controllers/getVendorEngagement.controller';
+import { logInVendorControlller } from '../useCases/vendors/controllers/logInVendorControlller';
 import { updateVendorEngagementController } from '../useCases/vendors/controllers/updateVendorEngagement.controller';
 
 const vendorsRoutes = express.Router();
 
+vendorsRoutes.post('/login', logInVendorControlller);
 vendorsRoutes.get('/engagement', getVendorEngagementController);
 vendorsRoutes.put('/engagement', updateVendorEngagementController);
 
