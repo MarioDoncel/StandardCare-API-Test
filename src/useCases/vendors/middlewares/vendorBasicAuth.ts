@@ -23,13 +23,16 @@ export const vendorBasicAuthMiddleware = async (
   const [name, password] = credentials.split(':');
 
   try {
-    const hashPassword = bcrypt.hash(password, BCRYPT_SALT_ROUNDS);
     const vendor: IVendor | null = await VendorModel.findOne({
       name,
-      password: hashPassword,
     });
+    if (!vendor || !vendor.password)
+      throw new DatabaseError('Invalid authentication credentials');
 
-    if (!vendor) throw new DatabaseError('Invalid authentication credentials');
+    const validPassword = bcrypt.compare(password, vendor.password);
+    if (!validPassword)
+      throw new DatabaseError('Invalid authentication credentials');
+
     res.locals.vendor = vendor;
     next();
   } catch (error) {

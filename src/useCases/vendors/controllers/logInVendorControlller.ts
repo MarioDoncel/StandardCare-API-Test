@@ -1,8 +1,6 @@
 import { NextFunction, Response, Request } from 'express';
 
 import { createAndSetTokens } from '../../../utils/createAndSetTokens';
-import { createJWT } from '../../../utils/jwt';
-import { createRefreshToken } from '../../../utils/refreshToken';
 
 export const logInVendorControlller = async (
   req: Request,

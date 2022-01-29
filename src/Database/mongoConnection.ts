@@ -1,7 +1,7 @@
 import mongoose from 'mongoose';
 import autoIncrement from 'mongoose-auto-increment';
 
-import environmentVariables from '../config/environment';
+import { environmentVariables } from '../config/environment';
 
 const MongoConnection = async () => {
   try {
