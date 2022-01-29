@@ -1,13 +1,13 @@
 import bcrypt from 'bcrypt';
 import { NextFunction, Response, Request } from 'express';
 
-import { environmentVariables } from '../config/environment';
-import { VendorModel } from '../Database/model/Vendors';
-import AppError from '../errors/AppError';
-import DatabaseError from '../errors/DatabaseError';
-import { IVendor } from '../interfaces/Vendor';
+import { environmentVariables } from '../../../config/environment';
+import { VendorModel } from '../../../Database/model/Vendors';
+import AppError from '../../../errors/AppError';
+import DatabaseError from '../../../errors/DatabaseError';
+import { IVendor } from '../../../interfaces/Vendor';
 
-export const basicAuthMiddleware = async (
+export const vendorBasicAuthMiddleware = async (
   req: Request,
   res: Response,
   next: NextFunction
