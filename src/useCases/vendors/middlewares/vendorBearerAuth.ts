@@ -26,7 +26,11 @@ export const vendorBearerAuthMiddleware = async (
 
   const accessTokenIsValid = validateJWTVendorService(accessToken);
   if (accessTokenIsValid.valid) {
-    res.locals.id = accessTokenIsValid.id;
+    const vendor: IVendor | null = await VendorModel.findById(
+      accessTokenIsValid.id
+    );
+    if (!vendor) throw new DatabaseError('Vendor not found');
+    res.locals.vendor = vendor;
     next();
   }
 

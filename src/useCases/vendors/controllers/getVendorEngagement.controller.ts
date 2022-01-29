@@ -8,9 +8,9 @@ export const getVendorEngagementController = async (
   res: Response,
   next: NextFunction
 ): Promise<Response | undefined> => {
-  const { vendorName } = res.locals; // I assume the vendor name comes from an authentication middleware, because in the documentation is described as get YOUR current metrics.
+  const { name } = res.locals.vendor;
   try {
-    const vendor: IVendor = await getVendorByNameService(vendorName);
+    const vendor: IVendor = await getVendorByNameService(name);
     const { engagement } = vendor;
 
     res.status(200).json(engagement);
