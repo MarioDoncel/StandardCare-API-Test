@@ -10,7 +10,7 @@ export const sendEmailVerification = async (
 ) => {
   const msg = {
     to: userEmail,
-    from: 'standardCare@example.com',
+    from: '88mario.doncel@gmail.com',
     subject: 'Email Verification',
     text: 'Please click on the link to confirm your email.',
     html: `<a href="${process.cwd()}/users/validation/${verificationToken}">Confirm Email</a>`,

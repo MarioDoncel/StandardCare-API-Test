@@ -23,7 +23,7 @@ export const verifyEmailController = async (
       throw new ForbiddenError('Invalid Token.');
 
     const id = decoded.sub;
-    setEmailVerifiedService(id);
+    setEmailVerifiedService(Number(id));
 
     return res.status(200).send('Email verified');
   } catch (error) {
