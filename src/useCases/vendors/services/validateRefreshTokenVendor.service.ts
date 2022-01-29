@@ -1,6 +1,7 @@
 import bcrypt from 'bcrypt';
 
 import { environmentVariables } from '../../../config/environment';
+import { RefreshTokenModel } from '../../../Database/model/ValidRefreshTokens';
 import ForbiddenError from '../../../errors/ForbiddenError';
 import { IRefreshToken } from '../../../interfaces/RefreshToken';
 
@@ -22,6 +23,14 @@ export const validateRefreshTokenVendorService = async (
   );
 
   if (!validSecret) throw new ForbiddenError('RefreshToken Invalid');
+
+  const refreshTokenActiveInDatabase = RefreshTokenModel.findById(
+    // eslint-disable-next-line no-underscore-dangle
+    refreshToken._id
+  );
+
+  if (!refreshTokenActiveInDatabase)
+    throw new ForbiddenError('RefreshToken Invalid');
 
   return true;
 };

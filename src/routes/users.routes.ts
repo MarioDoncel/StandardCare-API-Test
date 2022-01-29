@@ -11,7 +11,6 @@ const usersRouter = express.Router();
 usersRouter.post('/', createUserController);
 
 usersRouter.get('/', getAllUsersController);
-
 usersRouter.get('/:userId', getUserByIdController);
 
 usersRouter.patch('/:userId', updateUserController);
