@@ -1,4 +1,3 @@
-import bcrypt from 'bcrypt';
 import { NextFunction, Response, Request } from 'express';
 import jwt from 'jsonwebtoken';
 
@@ -8,8 +7,8 @@ import AppError from '../../../errors/AppError';
 import DatabaseError from '../../../errors/DatabaseError';
 import { IVendor } from '../../../interfaces/Vendor';
 import { createAndSetTokens } from '../../../utils/createAndSetTokens';
-import { validateRefreshToken } from '../../../utils/refreshToken';
 import { validateJWTVendorService } from '../services/validateJwtVendor.service';
+import { validateRefreshTokenVendorService } from '../services/validateRefreshTokenVendor.service';
 
 export const vendorBearerAuthMiddleware = async (
   req: Request,
@@ -40,7 +39,10 @@ export const vendorBearerAuthMiddleware = async (
     { ignoreExpiration: true }
   );
   if (typeof vendorId !== 'string') throw new Error();
-  const refreshTokenIsValid = validateRefreshToken(vendorId, refreshToken);
+  const refreshTokenIsValid = validateRefreshTokenVendorService(
+    vendorId,
+    refreshToken
+  );
 
   if (!refreshTokenIsValid) throw new AppError('Vendor unauthorized', '', 401);
 

@@ -1,15 +1,12 @@
 import bcrypt from 'bcrypt';
 
-import { environmentVariables } from '../config/environment';
-import { tokensConfig } from '../config/tokens';
-import { RefreshTokenModel } from '../Database/model/ValidRefreshTokens';
-import ForbiddenError from '../errors/ForbiddenError';
-import { IRefreshToken } from '../interfaces/RefreshToken';
+import { environmentVariables } from '../../../config/environment';
+import ForbiddenError from '../../../errors/ForbiddenError';
+import { IRefreshToken } from '../../../interfaces/RefreshToken';
 
-const { REFRESH_TOKEN_SECRET, BCRYPT_SALT_ROUNDS } = environmentVariables;
-const encryptedSecret = bcrypt.hash(REFRESH_TOKEN_SECRET, BCRYPT_SALT_ROUNDS);
+const { REFRESH_TOKEN_SECRET } = environmentVariables;
 
-export const validateRefreshToken = async (
+export const validateRefreshTokenVendorService = async (
   accessId: string,
   refreshToken: IRefreshToken
 ): Promise<boolean> => {
