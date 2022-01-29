@@ -6,6 +6,7 @@ import { environmentVariables } from '../../../config/environment';
 import { IUser } from '../../../interfaces/User';
 import { sendEmailVerification } from '../../../utils/sendEmailVerification';
 import { createUserService } from '../services/createUser.service';
+import { sendVerificationEmailService } from '../services/sendVericationEmail.service';
 
 export const createUserController = async (
   req: Request,
@@ -22,17 +23,7 @@ export const createUserController = async (
       dateOfBirth,
     });
 
-    if (user._id) {
-      const verificationToken = sign(
-        {},
-        environmentVariables.VERIFICATION_EMAIL_SECRET,
-        {
-          subject: user._id.toString(),
-          expiresIn: '1d',
-        }
-      );
-      sendEmailVerification(email, verificationToken);
-    }
+    if (user._id) sendVerificationEmailService(user._id.toString(), email);
 
     return res.status(201).send(user);
   } catch (error) {
