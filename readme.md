@@ -50,7 +50,7 @@ API developed as a challenge for an internship apply.
 
 ### The routes to be designed are for a specific type of analytics called 'Engagement'
 
-### Engagement is an important measure of digital health solutions (Think of apps like Calm, Headspace, Noom, etc.). Applications used for managing weight, reducing anxiety, managing diabetes, etc. Engagement measures how frequently users use the app. Our (XXXXXXXXX) API is the place to report those statistics. The digital health vendor will POST engagement to standard care, and we will report it so potential buyers of the app.
+### Engagement is an important measure of digital health solutions (Think of apps like Calm, Headspace, Noom, etc.). Applications used for managing weight, reducing anxiety, managing diabetes, etc. Engagement measures how frequently users use the app. Our API is the place to report those statistics. The digital health vendor will POST engagement to standard care, and we will report it so potential buyers of the app.
 
 Engagement is measured on a group of n users and is reported as a percentage, integer from 0-99
 
@@ -392,7 +392,46 @@ Finished.
      ```js
        return res.status(200).json(updatedVendor) 
      ```
-   
+## Census
+
+  ### GET:  
+  
+  * /:clientName -> Get the census users of client name
+  
+     - Expected Response: 
+     ```json
+      [  
+        {
+          "_id": "ObjectId",
+          "name": "string",
+          "dateOfBirth": "DateInString",
+          "clientName": "string",
+        }
+      ]
+     ```
+
+     ```js
+       return res.status(200).json(census);
+     ```
+     
+  ### POST:
+     
+  * / -> Upload a .csv with data of the census and stores it in database
+  
+    - Expected Request file:
+     ```file
+       file.csv containing the list of people in census as "name,date of birth"
+     ```
+
+     - Expected Response: 
+     ```js
+      "Success"
+     ```
+
+     ```js
+       return res.status(201).send('Success');
+     ```
+  
 
 <p align="right">(<a href="#top">back to top</a>)</p>
 
@@ -413,9 +452,7 @@ Mario Andres Doncel Neto
 Email - 88mario.doncel@gmail.com <br>
 Whatsapp - +55 19 99612 9909
 
-Project Link: [https://github.com/MarioDoncel/Teste-Cintra-Backend](https://github.com/MarioDoncel/Teste-Cintra-Backend)
-
-Link In Production: [Featured Movies](https://distracted-hypatia-ca905d.netlify.app/)
+Project Link: [https://github.com/MarioDoncel/StandardCare-API-Test](https://github.com/MarioDoncel/StandardCare-API-Test)
 
 <p align="right">(<a href="#top">back to top</a>)</p>
 
@@ -423,8 +460,7 @@ Link In Production: [Featured Movies](https://distracted-hypatia-ca905d.netlify.
 <!-- ACKNOWLEDGMENTS -->
 ## Acknowledgments
 
-* Sergio Cintra JR
-* DevFast
+* Ryan Stellar
 
 <p align="right">(<a href="#top">back to top</a>)</p>
 
