@@ -1,4 +1,4 @@
-import bcrypt from 'bcrypt';
+import md5 from 'crypto-js/md5';
 import { NextFunction, Response, Request } from 'express';
 
 import { environmentVariables } from '../../../config/environment';
@@ -13,7 +13,6 @@ export const vendorBasicAuthMiddleware = async (
   next: NextFunction
 ) => {
   const authHeader = req.headers.authorization;
-  const { BCRYPT_SALT_ROUNDS } = environmentVariables;
 
   if (!authHeader || !authHeader.includes('Basic'))
     throw new AppError('Missing authorization header');
@@ -23,7 +22,7 @@ export const vendorBasicAuthMiddleware = async (
   const [name, password] = credentials.split(':');
 
   try {
-    const hashPassword = bcrypt.hash(password, Number(BCRYPT_SALT_ROUNDS));
+    const hashPassword = md5(password).toString();
     const vendor: IVendor | null = await VendorModel.findOne({
       name,
       password: hashPassword,

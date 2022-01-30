@@ -1,14 +1,15 @@
 import { NextFunction, Response, Request } from 'express';
+import { ObjectId } from 'mongodb';
 
-import { createAndSetTokens } from '../../../utils/createAndSetTokens';
+import { createTokens } from '../../../utils/createTokens';
 
 export const logInVendorControlller = async (
   req: Request,
   res: Response,
   next: NextFunction
 ): Promise<Response> => {
-  const { _id }: { _id: string } = res.locals.vendor;
-  createAndSetTokens(_id);
+  const { _id }: { _id: ObjectId } = res.locals.vendor;
+  const tokens = await createTokens(_id.toString());
 
-  return res.status(200).json('Success');
+  return res.status(200).json(tokens);
 };

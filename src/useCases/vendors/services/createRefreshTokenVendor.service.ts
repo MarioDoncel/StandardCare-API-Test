@@ -7,7 +7,7 @@ import { IRefreshToken } from '../../../interfaces/RefreshToken';
 
 export const createRefreshTokenVendorService = async (id: string) => {
   const { REFRESH_TOKEN_SECRET, BCRYPT_SALT_ROUNDS } = environmentVariables;
-  const encryptedSecret = bcrypt.hash(
+  const encryptedSecret = await bcrypt.hash(
     REFRESH_TOKEN_SECRET,
     Number(BCRYPT_SALT_ROUNDS)
   );

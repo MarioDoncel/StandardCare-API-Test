@@ -1,5 +1,6 @@
 import express from 'express';
 
+import { createVendorController } from '../useCases/vendors/controllers/createVendor.controller';
 import { getVendorEngagementController } from '../useCases/vendors/controllers/getVendorEngagement.controller';
 import { logInVendorControlller } from '../useCases/vendors/controllers/logInVendorControlller';
 import { updateVendorEngagementController } from '../useCases/vendors/controllers/updateVendorEngagement.controller';
@@ -8,6 +9,7 @@ import { vendorBearerAuthMiddleware } from '../useCases/vendors/middlewares/vend
 
 const vendorsRoutes = express.Router();
 
+vendorsRoutes.post('/', createVendorController);
 vendorsRoutes.post('/login', vendorBasicAuthMiddleware, logInVendorControlller);
 vendorsRoutes.get(
   '/engagement',

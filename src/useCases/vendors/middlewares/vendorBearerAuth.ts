@@ -6,7 +6,7 @@ import { VendorModel } from '../../../Database/model/Vendors';
 import AppError from '../../../errors/AppError';
 import DatabaseError from '../../../errors/DatabaseError';
 import { IVendor } from '../../../interfaces/Vendor';
-import { createAndSetTokens } from '../../../utils/createAndSetTokens';
+import { createTokens } from '../../../utils/createTokens';
 import { validateJWTVendorService } from '../services/validateJwtVendor.service';
 import { validateRefreshTokenVendorService } from '../services/validateRefreshTokenVendor.service';
 
@@ -53,9 +53,10 @@ export const vendorBearerAuthMiddleware = async (
   try {
     const vendor: IVendor | null = await VendorModel.findById(vendorId);
     if (!vendor) throw new DatabaseError('Vendor not found');
-    createAndSetTokens(vendorId);
+    const tokens = await createTokens(vendorId);
     // silent login
     res.locals.vendor = vendor;
+    res.locals.tokens = tokens;
     next();
   } catch (error) {
     next(error);
