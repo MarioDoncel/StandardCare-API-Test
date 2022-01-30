@@ -9,7 +9,7 @@ export const updateVendorEngagementController = async (
   res: Response,
   next: NextFunction
 ): Promise<Response | undefined> => {
-  const engagement: string = req.body;
+  const { engagement }: { engagement: string } = req.body;
   const { name } = res.locals.vendor;
 
   try {
