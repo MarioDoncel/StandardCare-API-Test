@@ -10,10 +10,13 @@ export const sendEmailVerification = async (
 ) => {
   const msg = {
     to: userEmail,
-    from: '88mario.doncel@gmail.com',
+    from: environmentVariables.SENDGRID_EMAIL_FROM,
     subject: 'Email Verification',
     text: 'Please click on the link to confirm your email.',
-    html: `<a href="${process.cwd()}/users/validation/${verificationToken}">Confirm Email</a>`,
+    html: `<html>
+    <p>Please click on the link to confirm your email</p>
+    <a href="${environmentVariables.DOMAIN}users/validation/${verificationToken}">Confirm Email</a>
+    <p>Link to confirm email:</br> ${environmentVariables.DOMAIN}/users/validation/${verificationToken}</p></html>`,
   };
 
   try {

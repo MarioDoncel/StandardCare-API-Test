@@ -12,8 +12,8 @@ usersRouter.post('/', createUserController);
 
 usersRouter.get('/', getAllUsersController);
 usersRouter.get('/:userId', getUserByIdController);
+usersRouter.get('/validation/:verificationToken', verifyEmailController);
 
 usersRouter.patch('/:userId', updateUserController);
-usersRouter.patch('/validation/:verificationToken', verifyEmailController);
 
 export default usersRouter;
