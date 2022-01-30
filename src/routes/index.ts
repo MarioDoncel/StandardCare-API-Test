@@ -6,9 +6,6 @@ import vendorsRoutes from './vendor.routes';
 const routes = express.Router();
 
 routes.get('/', (req: Request, res: Response, next: NextFunction) => {
-  console.log(`reqheaders- ${req.headers.host}`);
-  console.log(`reqheaders- ${window.location}`);
-
   res.send('Hello Ryan, server is running! ');
 });
 
