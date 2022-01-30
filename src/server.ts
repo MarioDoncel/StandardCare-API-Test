@@ -2,7 +2,9 @@ import 'dotenv/config';
 import 'express-async-errors';
 import cors from 'cors';
 import express from 'express';
+import cron from 'node-cron';
 
+import { deleteExpiredRefreshTokens } from './config/cronJob';
 import MongoConnection from './Database/mongoConnection';
 import { errorHandler, mongoErrorHandler } from './middlewares/errorHandler';
 import routes from './routes';
@@ -22,5 +24,7 @@ app.use(routes);
 
 app.use(mongoErrorHandler);
 app.use(errorHandler);
+
+cron.schedule('0 2 * * * ', deleteExpiredRefreshTokens);
 
 app.listen(PORT, () => console.log(`⚡️:Server is running on ${HOST}:${PORT}`));

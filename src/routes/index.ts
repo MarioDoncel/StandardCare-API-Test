@@ -1,5 +1,6 @@
 import express, { Request, Response, NextFunction } from 'express';
 
+import censusRoutes from './census.routes';
 import usersRoutes from './users.routes';
 import vendorsRoutes from './vendor.routes';
 
@@ -11,5 +12,6 @@ routes.get('/', (req: Request, res: Response, next: NextFunction) => {
 
 routes.use('/vendors', vendorsRoutes);
 routes.use('/users', usersRoutes);
+routes.use('/census', censusRoutes);
 
 export default routes;

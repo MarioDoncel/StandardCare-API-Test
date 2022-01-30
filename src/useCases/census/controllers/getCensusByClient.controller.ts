@@ -10,7 +10,9 @@ export const getCensusByClientController = async (
 ): Promise<Response | undefined> => {
   const { clientName } = req.params;
   try {
-    const census: ICensus[] = await getCensusByClientService(clientName);
+    const census: ICensus[] = await getCensusByClientService(
+      decodeURIComponent(clientName)
+    );
 
     return res.status(200).json(census);
   } catch (error) {
