@@ -7,7 +7,7 @@
 API developed as a challenge for an internship apply. Read the section About the Project for complete information. 
   
 
-[![MIT License][license-shield]](https://github.com/MarioDoncel/Teste-Cintra-Backend/blob/main/LICENSE)
+[![MIT License][license-shield]](https://github.com/MarioDoncel/StandardCare-API-Test/blob/main/LICENSE)
 [![LinkedIn][linkedin-shield]](https://www.linkedin.com/in/marioadoncel/)
 
 <br />
@@ -37,13 +37,14 @@ API developed as a challenge for an internship apply. Read the section About the
     <li><a href="#acknowledgments">Acknowledgments</a></li>
   </ol>
 </details>
-
+</div>
 
 <!-- ABOUT THE PROJECT -->
 ## About The Project
 API developed as a challenge for an internship apply. 
 
-Specification: Specification:
+### Test specifications:
+<hr>
 
 ### The API will GET and PUT data
 
@@ -59,59 +60,74 @@ Engagement is measured on a group of n users and is reported as a percentage, in
 
 * Create upload code to your GitHub and share the link below.
 
-The main requirements was to create the API, show the movies in a list of cards with pagination, a image slider, filter then by categories, show the data of the movies individually on a page. For tecnologies was asked to use ReactJS,Styled-Components, Redux SAGA (i used Redux-Toolkit for production, but there is a SAGA implementation on branch redux-saga), Axios, React Router. 
+<hr>
 
-  I accomplished the challenge early and went further than the requirements asked, creating some other features and an API for users register/login/logout and validation with JWT and Refresh Token strategie seted in cookies httpOnly. Also i used Typescript for Front and Back, at Backend i used NodeJs (Express) connected to Mongo DB Atlas Database. In Database there are a collection user and whitelist (stores the valid refresh tokens to allow more control on users permissions, whith it i can revogate the access easily).
+The API was buil with Node(Express), Typescript and MongoDB Atlas. 
+
+I went well beyond what was requested, creating as much content as possible within the stipulated time(4 days).
+
+Created the models for vendor, users, validRefreshTokens, Census. 
+
+Created the following routes : 
+
+- Users: 
+  - POST - Create user and send an email for email verification
+  - GET - Get all users
+  - GET - Get user by id
+  - GET - Verify user email
+  - PACTH - Update user informations
+  <br>
+  <br>
+- Vendors:
+  - POST - create vendor
+  - POST - Login vendor, with basic auth middleware
+  - GET - Get vendor engagement metrics, with bearer auth middleware using JWT and Refresh Token strategie
+  - PUT - Update vendor engagement metrics, with bearer auth middleware using JWT and Refresh Token strategie
+  <br>
+  <br>
+- Census:
+  - POST - Receive census data from a client from a .csv file
+  - GET - Get census data filtered by client name
+  <br>
+  <br>
+
+Created error handlers
+
+Created authentication strategy with JWT and refresh token
+
+Folders structured by use cases
+
+At the end i added a cron-job to delete all expirated refresh tokens from database at 02:00AM everyday.
   
-  At the end i added a cron-job to delete all expirated refresh tokens from database at 02:00AM everyday.
-  
-  Time of development: 7 days
+Time of development: 4 days
 
 <p align="right">(<a href="#top">back to top</a>)</p>
 
 
 ### Built With
 
-<!-- This section should list any major frameworks/libraries used to bootstrap your project. Leave any add-ons/plugins for the acknowledgements section. Here are a few examples. -->
 
-#### FrontEnd
-* [Typescript](https://www.typescriptlang.org/)
-* [ReactJS](https://pt-br.reactjs.org/)
-* [Styled Components](https://styled-components.com/)
-* [React Router](https://v5.reactrouter.com/web/guides/quick-start)
-* [React Icons](https://react-icons.github.io/react-icons/)
-* [Redux-SAGA](https://redux-saga.js.org/)
-* [Redux-Toolkit](https://redux-toolkit.js.org/)
-* ContextAPI
-* [SwiperJS](https://swiperjs.com/)
-* [Axios](https://axios-http.com/docs/intro)
-* [JWT](https://jwt.io/)
-
-#### Backend
 * [Typescript](https://www.typescriptlang.org/)
 * [NodeJs](https://nodejs.org/en/)
 * [ExpressJs](https://expressjs.com/pt-br/)
 * [JWT](https://jwt.io/)
 * [MongoDB](https://www.mongodb.com/)
 * [Mongoose](https://mongoosejs.com/)
+* Mongoose-auto-increment
 * Node-cron
+* ESLint
+* JWT
+* Multer
+* Csv-parse
+* Bcrypt
+* Crypto-js
 
 
-<!-- 
-* [Next.js](https://nextjs.org/)
-* [React.js](https://reactjs.org/)
-* [Vue.js](https://vuejs.org/)
-* [Angular](https://angular.io/)
-* [Svelte](https://svelte.dev/)
-* [Laravel](https://laravel.com)
-* [Bootstrap](https://getbootstrap.com)
-* [JQuery](https://jquery.com)
- -->
 <p align="right">(<a href="#top">back to top</a>)</p>
 
 ### Objective
 
-Project developed for a job interview.
+Project developed for an internship apply.
 <p align="right">(<a href="#top">back to top</a>)</p>
 
 ### Status
@@ -119,6 +135,7 @@ Project developed for a job interview.
 Finished.
 <p align="right">(<a href="#top">back to top</a>)</p>
 
+<hr>
 <!-- GETTING STARTED -->
 ## Getting Started
 
@@ -137,7 +154,7 @@ Finished.
 
 1. Clone the repo
    ```sh
-   git clone https://github.com/MarioDoncel/Teste-Cintra-Backend
+   git clone https://github.com/MarioDoncel/StandardCare-API-Test
    ```
 2. Install NPM packages
    ```sh
@@ -148,18 +165,19 @@ Finished.
    ```.env
     MONGO_CONNECTION=mongodb+srv://<username>:<password>@<cluster>.oczo8.mongodb.net/<database>?retryWrites=true&w=majority
     JWT_SECRET=yoursecret
+    VERIFICATION_EMAIL_SECRET=yourSecret
+    REFRESH_TOKEN_SECRET=yourSecret
+    BCRYPT_SALT_ROUNDS=number
+    SENDGRID_API_KEY=yourAPIKey
+    SENDGRID_EMAIL_FROM=yourEmail
+    DOMAIN=currentDomainOfTheApplication
     ```
     
    
 4. Run the application
     ```js
-    npm start
+    npm run dev
     ```
-  or 
-
-1. Open it on the link bellow
-
-  <a href="https://distracted-hypatia-ca905d.netlify.app/"> Featured Movies </a>
 
 
 <p align="right">(<a href="#top">back to top</a>)</p>
@@ -168,105 +186,211 @@ Finished.
 <!-- USAGE EXAMPLES -->
 ## Usage
 
-<img src="featuredmovies_GIF.gif" alt="Movies gif" width="500px">
-
-### BaseURL - http://localhost:5000
+### BaseURL - http://localhost:3000
 
 # ROUTES
-
-## Token
-
-  ### GET: 
-  
-  * /validate -> Verify the JWT secret and expiration (1 hour of expiration), if its valid returns the JWT access token, if not valid or expired verify the refresh token expiration and 
-  if its valid at the Whitelist collection in Mongo Database, if it is valid create new tokens set them to the user browser and returns the new JWT access token, if not authen
-  ticated returns an error
-  
-     - Cookies (httpOnly): 
-
-     ```
-         AccessToken: JWT
-         RefreshToken: {
-            _id?:string;
-            hash: string;
-            userId: string;
-            expiresIn:number;
-         }
-     ```
-     
      
 ## Users
 
   ### GET:  
   
-  * /login -> Make the basic authentication of the user and create and set the Access Token and the Refresh Token at cookies httpOnly.
+  * / -> Get all users
   
-    - Basic authentication: 
-
+    ```json
+      [
+        {
+          "_id_":"ObjectId",
+          "firstName":"string",
+          "lastName":"string",
+          "email": "string", 
+          "dateOfBirth": "string",
+          "emailVerified": false,
+          "createDate": "Date.now()"
+        }
+      ]
      ```
-         'Basic email:password'
-     ```
-     
-     - Response: 
 
      ```js
-       return res.status(200).send(token)  - token = JWT Token
+       return res.status(200).json(users) 
      ```
-  * /:id -> Receives the id and return the user information
-  
-    - Params: 
-
-     ```
-         :id
-     ```
+  * /:userId -> Get user by Id
      
-     - Response: 
-
+     - Expected Response: 
      ```json
        {
-         "id": string;
-         "username":string
-         "email":string
-         "password":string - encrypted
+          "_id_":"ObjectId",
+          "firstName":"string",
+          "lastName":"string",
+          "email": "string", 
+          "dateOfBirth": "string",
+          "emailVerified": false,
+          "createDate": "Date.now()"
         }
      ```
-     - i should remove the password from the response
+
+     ```js
+       return res.status(200).json(user) 
+     ```
+  * /validation/:verificationToken -> Verify email from an user
+     
+     - Expected Response: 
+  
+     ```js
+       return res.status(200).send('Email verified') 
+     ```
      
   ### POST:
      
-  * /create -> Create and register an user at database
+  * / -> Create user, register an user at database and send email for email verification
   
-    - Body: 
-
+    - Expected Request Body:
      ```json
        {
-          "username":"string",
+          "firstName":"string",
+          "lastName":"string",
           "email": "string", 
-          "password": "string"
+          "dateOfBirth": "string"
         }
      ```
-     
-     - Response: 
+
+     - Expected Response: 
+     ```json
+       {
+          "_id":"number",
+          "firstName":"string",
+          "lastName":"string",
+          "email": "string", 
+          "dateOfBirth": "string",
+          "emailVerified": false,
+          "createDate": "Date.now()"
+        }
+     ```
 
      ```js
-       return res.status(201).send(token)  - token = JWT Token
+       return res.status(201).json(user) 
+     ```
+     
+  ### PATCH:
+     
+  * /:userId -> Update user data by user Id
+        
+   - Expected Request Body:
+     ```json
+       {
+          "fieldToUpdate":"value",
+         ...
+        }
+     ```
+
+      - Expected Response: 
+     ```json
+       {
+          "_id":"number",
+          "firstName":"string",
+          "lastName":"string",
+          "email": "string", 
+          "dateOfBirth": "string",
+          "emailVerified": "boolean",
+          "createDate": "Date"
+        }
+     ```
+     ```js
+       return res.status(200).json(updatedUser) 
+     ```
+## Vendors
+
+  ### GET:  
+  
+  * /engagement -> Make a bearer authentication with JWT(access and refresh tokens) then get engagement metric from the authenticated vendor
+  
+    - Expected Request Header:
+     ```header
+       Authorization: 'Bearer JWThash'
+     ```
+
+     - Expected Response: 
+     ```js
+      "0-99NumberAsString"
+     ```
+
+     ```js
+       return res.status(200).json(engagement) 
+     ```
+     
+  ### POST:
+     
+  * / -> Create a vendor, register a vendor at database
+  
+    - Expected Request Body:
+     ```json
+       {
+          "name":"string",
+          "password":"string",
+        }
+     ```
+
+     - Expected Response: 
+     ```json
+       {
+          "name": "string",
+          "engagement": "stringOfNumber0-99",
+          "password": "hashString",
+          "_id": "ObjectId",
+          "createdAt": "Date.now()",
+          "updatedAt": "Date.now()",
+          "__v": 0
+        }
+     ```
+
+     ```js
+       return res.status(201).json(vendor) 
+     ```
+  * /login -> Make a basic authentication to generate JWT with tokens(access(JWT) and refresh) and return it.
+  
+    - Expected Request Header:
+     ```header
+       Authorization: 'Basic name:password'
+     ```
+
+     - Expected Response: 
+     ```bearerToken
+      "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhY2Nlc3NUb2tlbiI6ImV5SmhiR2NpT2lKSVV6STFOaUlzSW5SNWNDSTZJa3BYVkNKOS5leUpwWVhRaU9qRTJORE0xTXpNMk5UTXNJbVY0Y0NJNk1UWTBNelV6TnpJMU15d2ljM1ZpSWpvaU5qRm1OalJqTlRJMk5EZzVZalEzTm1OaFpUUm1aalF5SW4wLnZQbm04ZjNqaUY0OERycWtDbDhXRUJTSDViZ0JEMFZmeUdlX09ELWVQNlkiLCJyZWZyZXNoVG9rZW4iOiJ7XCJhY2Nlc3NJZFwiOlwiNjFmNjRjNTI2NDg5YjQ3NmNhZTRmZjQyXCIsXCJzZWNyZXRcIjpcIiQyYiQxMCRyRWhFU2J2SW5aenBtWEk2VUFQb21PdG9RMnZCQkFPTWlvVklMc3FwSEFJLzRhMkdUNHBzQ1wiLFwiZXhwaXJlc0luXCI6MTY0NjEyNTU4MjEwMSxcIl9pZFwiOlwiNjFmNjU1NTYxZmJjYWQxZjAxNzMyMTVjXCIsXCJfX3ZcIjowfSIsImlhdCI6MTY0MzUzMzY1NCwiZXhwIjoxNjQ2MTI1NjU0fQ.17itBCsqxsuNrOFNfII5JA-_XsY6JNsI3kAS98ZccwY"
+     ```
+
+     ```js
+       return res.status(200).json(token) 
      ```
      
   ### PUT:
      
-  * /logout -> Update the whitelist of refresh tokens at Mongo database, removing the current refresh token and delete the tokens from the cookies of user browser
-        - might should use DELETE for this route
-    - Cookies: 
+  * /engagement ->  Make a bearer authentication with JWT(access and refresh tokens) then update engagement metric from the authenticated vendor
 
+  - Expected Request Header:
+     ```header
+       Authorization: 'Bearer JWThash'
      ```
-        AccessToken
-        RefreshToken
+        
+   - Expected Request Body:
+     ```json
+       {
+          "engagement":"0-99NumberAsString",
+        }
      ```
 
-     - Response: 
-
+     - Expected Response: 
+     ```json
+       {
+          "name": "string",
+          "engagement": "stringOfNumber0-99",
+          "password": "hashString",
+          "_id": "ObjectId",
+          "createdAt": "Date.now()",
+          "updatedAt": "Date.now()",
+          "__v": "number"
+        }
      ```
-        return res.status(200).send("success")
+     ```js
+       return res.status(200).json(updatedVendor) 
      ```
    
 

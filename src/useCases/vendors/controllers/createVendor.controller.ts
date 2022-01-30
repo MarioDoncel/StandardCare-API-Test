@@ -20,7 +20,7 @@ export const createVendorController = async (
       password: hashPassword,
     });
 
-    return res.status(201).send(vendor);
+    return res.status(201).json(vendor);
   } catch (error) {
     next(error);
     return undefined;

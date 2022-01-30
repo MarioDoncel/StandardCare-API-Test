@@ -25,7 +25,7 @@ export const createUserController = async (
 
     if (user._id) sendVerificationEmailService(user._id.toString(), email);
 
-    return res.status(201).send(user);
+    return res.status(201).json(user);
   } catch (error) {
     next(error);
     return undefined;
