@@ -9,7 +9,6 @@ const MongoConnection = async () => {
 
     console.log('💾:Database Connected');
   } catch (error) {
-    console.log(environmentVariables.MONGO_CONNECTION);
     console.error(error);
     process.exit();
   }
