@@ -82,7 +82,7 @@ Created the following routes :
   - POST - create vendor
   - POST - Login vendor, with basic auth middleware
   - GET - Get vendor engagement metrics, with bearer auth middleware using JWT and Refresh Token strategie
-  - PUT - Update vendor engagement metrics, with bearer auth middleware using JWT and Refresh Token strategie
+  - PUT - Update vendor engagement metrics, with bearer auth middleware using JWT and Refresh Token strategy
   <br>
   <br>
 - Census:
